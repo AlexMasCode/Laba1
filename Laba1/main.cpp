@@ -37,10 +37,11 @@ double mySin(double x, double e)
 	double res = x;
 	double sum = x;
 	int i = 1;
+	int k = 0;
 
 	while (fabs(sum) > e)
 	{
-		sum *= (-(x * x)) / ((2 * i) * (2 * i + 1));
+		sum *= -x * x / ((2 * i) * (2 * i + 1));
 		res = res + sum;
 		i++;
 	}
@@ -48,10 +49,10 @@ double mySin(double x, double e)
 	return res;
 }
 
+
 double myExp(double x, double n)
 {
 	double sum = 1;
-
 
 	for (int i = 1; i <= n; i++)
 	{
@@ -63,16 +64,16 @@ double myExp(double x, double n)
 
 double myCos(double x, double e)
 {
-	double res = 0;
 	double sum = 1;
+	double res = sum;
 	int k = 0;
 
-	while (fabs(sum) > e)
-	{
-		sum = myPow(-1, k) * myPow(x, 2 * k) / fact(2 * k);
-		res = res + sum;
+	do {
+		sum *= -x * x / ((2 * k + 1) * (2 * k + 2));
+		res += sum;
 		k++;
-	}
+
+	} while (abs(sum) > e);
 
 	return res;
 }
@@ -81,14 +82,28 @@ double myCos(double x, double e)
 
 int main()
 {
+
 	cout << "My sin(3): " << mySin(3, 0.001) << endl;
 	cout << "CMATH sin(3): " << sin(3) << endl << endl;
+
+	cout << "My sin(2): " << mySin(2, 0.001) << endl;
+	cout << "CMATH sin(2): " << sin(2) << endl << endl;
+
+	cout << "My sin(10): " << mySin(10, 0.001) << endl;
+	cout << "CMATH sin(10): " << sin(10) << endl << endl;
 
 	cout << "My exp(1, 10): " << myExp(1, 10) << endl;
 	cout << "CMATH exp(1): " << exp(1) << endl << endl;
 
-	cout << "My cos(2): " << myCos(5, 0.00001) << endl;
-	cout << "CMATH cos(2): " << cos(5) << endl;
+	cout << "My exp(2, 10): " << myExp(2, 10) << endl;
+	cout << "CMATH exp(2): " << exp(2) << endl << endl;
+
+	cout << "My cos(5): " << myCos(5, 0.00001) << endl;
+	cout << "CMATH cos(5): " << cos(5) << endl << endl;
+
+	cout << "My cos(4): " << myCos(4, 0.00001) << endl;
+	cout << "CMATH cos(4): " << cos(4) << endl;
+
 
 	return 0;
 }
