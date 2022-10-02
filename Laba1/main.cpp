@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <cmath>
 
 using namespace std;
@@ -32,6 +32,7 @@ double myPow(double x, int n)
 	return res;
 }
 
+// Область визначення (-32; 32). Точніше рядом Тейлора визначити не можливо, треба використовувати більш складніші і точнші формули та ряди.
 double mySin(double x, double e)
 {
 	double res = x;
@@ -49,19 +50,24 @@ double mySin(double x, double e)
 	return res;
 }
 
-
-double myExp(double x, double n)
+// Область визначення (-9; 707). Точніше рядом Тейлора визначити не можливо, треба використовувати більш складніші і точнші формули та ряди.
+double myExp(double x, double eps)
 {
 	double sum = 1;
 
-	for (int i = 1; i <= n; i++)
+	int i = 1;
+	double m = 1;
+
+	while (fabs(m) >= eps)
 	{
-		sum = sum + myPow(x, i) / fact(i);
+		m = m * x / i++;
+		sum = sum + m;
 	}
 
 	return sum;
 }
 
+// Область визначення (-35; 34). Точніше рядом Тейлора визначити не можливо, треба використовувати більш складніші і точнші формули та ряди.
 double myCos(double x, double e)
 {
 	double sum = 1;
@@ -82,28 +88,28 @@ double myCos(double x, double e)
 
 int main()
 {
+	cout << "SIN" << endl;
 
-	cout << "My sin(3): " << mySin(3, 0.001) << endl;
-	cout << "CMATH sin(3): " << sin(3) << endl << endl;
+	for (double i = -35; i < 35; i += 1)
+	{
+		cout << i << " - mySin = " << mySin(i, 0.0000001) << endl;
+		cout << i << " - cmath Sin = " << sin(i) << endl << endl;
+	}
+	
+	cout << "EXP" << endl;
 
-	cout << "My sin(2): " << mySin(2, 0.001) << endl;
-	cout << "CMATH sin(2): " << sin(2) << endl << endl;
+	for (double i = -9; i <= 707; i += 1)
+	{
+		cout << i << " - myExp = " << myExp(i, 0.0000001) << endl;
+		cout << i << " - cmath exp = " << exp(i) << endl << endl;
+	}
 
-	cout << "My sin(10): " << mySin(10, 0.001) << endl;
-	cout << "CMATH sin(10): " << sin(10) << endl << endl;
-
-	cout << "My exp(1, 10): " << myExp(1, 10) << endl;
-	cout << "CMATH exp(1): " << exp(1) << endl << endl;
-
-	cout << "My exp(2, 10): " << myExp(2, 10) << endl;
-	cout << "CMATH exp(2): " << exp(2) << endl << endl;
-
-	cout << "My cos(5): " << myCos(5, 0.00001) << endl;
-	cout << "CMATH cos(5): " << cos(5) << endl << endl;
-
-	cout << "My cos(4): " << myCos(4, 0.00001) << endl;
-	cout << "CMATH cos(4): " << cos(4) << endl;
-
+	cout << "COS" << endl;
+	for (double i = -40; i < 40; i += 1)
+	{
+		cout << i << " - myCos = " << myCos(i, 0.0000001) << endl;
+		cout << i << " - cmath Cos = " << cos(i) << endl << endl;
+	}
 
 	return 0;
 }
